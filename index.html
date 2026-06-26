@@ -509,8 +509,7 @@
           <div id="leave-balances-container" class="hidden"></div>
 
           <!-- NEW: Admin Leave KPIs (Hidden for Employee) -->
-          <div id="admin-leave-kpis" class="hidden grid grid-cols-1 md:grid-cols-4 gap-4"></div>
-
+          <div id="admin-leave-kpis" class="hidden grid grid-cols-1 md:grid-cols-5 gap-4"></div>
           <!-- NEW: Toolbar (Search & Filter) -->
           <div
             class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-dark-card p-4 rounded-2xl border border-gray-100 dark:border-dark-border shadow-sm">
@@ -794,16 +793,131 @@
             </form>
           </div>
           <div
-            class="bg-white dark:bg-dark-card rounded-2xl p-6 border border-gray-100 dark:border-dark-border shadow-sm">
-            <h3 class="text-xl font-bold mb-6 dark:text-white">Change Password</h3>
-            <form onsubmit="event.preventDefault(); App.actions.updateMyPassword();" class="space-y-4">
-              <input type="password" id="profile-current-pass" placeholder="Current Password" required
-                class="w-full bg-gray-50 dark:bg-slate-800 border rounded-xl px-4 py-2.5 text-sm">
-              <input type="password" id="profile-new-pass" placeholder="New Password" required
-                class="w-full bg-gray-50 dark:bg-slate-800 border rounded-xl px-4 py-2.5 text-sm">
-              <input type="password" id="profile-confirm-pass" placeholder="Confirm New Password" required
-                class="w-full bg-gray-50 dark:bg-slate-800 border rounded-xl px-4 py-2.5 text-sm">
-              <button type="submit" class="bg-brand-600 text-white px-6 py-2.5 rounded-xl">Update Password</button>
+            class="bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border shadow-sm overflow-hidden">
+            <div
+              class="px-6 py-5 border-b border-gray-100 dark:border-dark-border bg-gradient-to-r from-brand-50 to-indigo-50/40 dark:from-slate-800/50 dark:to-slate-800/20 flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-brand-100 dark:bg-brand-900/40 flex items-center justify-center text-brand-600 dark:text-brand-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold dark:text-white">Change Password</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Keep your account secure with a strong password</p>
+              </div>
+            </div>
+
+            <form onsubmit="event.preventDefault(); App.actions.updateMyPassword();" class="p-6 space-y-5">
+
+              <!-- Current Password -->
+              <div>
+                <label class="block text-sm font-medium mb-1.5 dark:text-gray-200">Current Password</label>
+                <div class="relative">
+                  <input type="password" id="profile-current-pass" placeholder="Enter your current password" required
+                    class="w-full bg-gray-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand-500 transition-shadow">
+                  <button type="button" onclick="pwToggle('profile-current-pass', this)"
+                    class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"
+                    tabindex="-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                      </path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- New Password -->
+              <div>
+                <label class="block text-sm font-medium mb-1.5 dark:text-gray-200">New Password</label>
+                <div class="relative">
+                  <input type="password" id="profile-new-pass" placeholder="Create a new password" required
+                    onkeyup="pwStrength()"
+                    class="w-full bg-gray-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand-500 transition-shadow">
+                  <button type="button" onclick="pwToggle('profile-new-pass', this)"
+                    class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"
+                    tabindex="-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                      </path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Strength meter -->
+                <div class="flex items-center gap-3 mt-3">
+                  <div class="flex-1 flex gap-1.5">
+                    <div id="pw-bar-1"
+                      class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-slate-700 transition-colors"></div>
+                    <div id="pw-bar-2"
+                      class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-slate-700 transition-colors"></div>
+                    <div id="pw-bar-3"
+                      class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-slate-700 transition-colors"></div>
+                    <div id="pw-bar-4"
+                      class="h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-slate-700 transition-colors"></div>
+                  </div>
+                  <span id="pw-strength-label" class="text-xs font-semibold text-gray-400 w-16 text-right">—</span>
+                </div>
+
+                <!-- Requirements checklist -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-xs">
+                  <div id="pw-req-len"
+                    class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 transition-colors"><span
+                      class="pw-dot">○</span> At least 8 characters</div>
+                  <div id="pw-req-upper"
+                    class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 transition-colors"><span
+                      class="pw-dot">○</span> One uppercase letter</div>
+                  <div id="pw-req-lower"
+                    class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 transition-colors"><span
+                      class="pw-dot">○</span> One lowercase letter</div>
+                  <div id="pw-req-num"
+                    class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 transition-colors"><span
+                      class="pw-dot">○</span> One number</div>
+                  <div id="pw-req-special"
+                    class="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 transition-colors"><span
+                      class="pw-dot">○</span> One special char (@$!%*?&)</div>
+                </div>
+              </div>
+
+              <!-- Confirm Password -->
+              <div>
+                <label class="block text-sm font-medium mb-1.5 dark:text-gray-200">Confirm New Password</label>
+                <div class="relative">
+                  <input type="password" id="profile-confirm-pass" placeholder="Re-enter your new password" required
+                    onkeyup="pwMatch()"
+                    class="w-full bg-gray-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand-500 transition-shadow">
+                  <button type="button" onclick="pwToggle('profile-confirm-pass', this)"
+                    class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"
+                    tabindex="-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                      </path>
+                    </svg>
+                  </button>
+                </div>
+                <p id="pw-match-text" class="text-xs mt-1.5 h-4"></p>
+              </div>
+
+              <div class="pt-1">
+                <button type="submit"
+                  class="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 text-white font-medium px-6 py-2.5 rounded-xl shadow-lg shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Update Password
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -1256,6 +1370,61 @@
     </div>
   </div>
 
+  <div id="on-leave-modal"
+    class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
+      <div
+        class="px-6 py-4 border-b border-gray-100 dark:border-dark-border flex justify-between items-center bg-gray-50 dark:bg-slate-800/50">
+        <h3 class="font-bold text-gray-800 dark:text-white">Employees on Leave</h3>
+        <button onclick="App.ui.modals.close('on-leave-modal')" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div id="on-leave-list-body" class="p-4 max-h-60 overflow-y-auto space-y-2">
+        <!-- List will be injected here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="correction-modal"
+    class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+    <div
+      class="bg-white dark:bg-dark-card rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+      <div class="px-6 py-4 border-b border-orange-100 dark:border-orange-900/30 bg-orange-50 dark:bg-orange-900/10">
+        <h3 class="text-lg font-bold text-orange-800 dark:text-orange-400">Action Required: Missing Check-out</h3>
+        <p class="text-xs text-orange-600 dark:text-orange-300 mt-1" id="correction-date-text">You must complete your
+          previous timesheet.</p>
+      </div>
+      <form id="correction-form" onsubmit="event.preventDefault(); App.actions.submitCorrection();"
+        class="p-6 space-y-4">
+        <input type="hidden" id="corr-att-id">
+
+        <div>
+          <label class="block text-sm font-medium mb-1 dark:text-gray-200">Actual Check-out Time</label>
+          <input type="time" id="corr-time" required
+            class="w-full bg-gray-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1 dark:text-gray-200">Reason / Justification</label>
+          <textarea id="corr-reason" required
+            class="w-full bg-gray-50 dark:bg-slate-800 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-brand-500"
+            rows="3" placeholder="Forgot to log out, system crash, etc."></textarea>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3">
+          <button type="button" onclick="App.ui.modals.close('correction-modal')"
+            class="px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 dark:bg-slate-800 dark:text-gray-200 rounded-xl">Cancel</button>
+          <button type="submit"
+            class="px-5 py-2.5 text-sm font-medium bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg transition-all">Submit
+            Correction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     const App = {
       state: {
@@ -1440,6 +1609,48 @@
       },
 
       actions: {
+        // Add this inside your App.actions object:
+
+        processCorrection: async (attId, decision) => {
+          let rejectionReason = '';
+
+          if (decision === 'Rejected') {
+            const { value: text, isConfirmed } = await Swal.fire({
+              title: 'Reject Correction',
+              input: 'text',
+              inputPlaceholder: 'Reason for rejection...',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              confirmButtonText: 'Reject & Mark Absent'
+            });
+            if (!isConfirmed) return;
+            rejectionReason = text || 'Rejected by policy';
+          } else {
+            const { isConfirmed } = await Swal.fire({
+              title: 'Approve Correction?',
+              text: 'This will finalize their check-out time and calculate hours.',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, Approve',
+              confirmButtonColor: '#10b981'
+            });
+            if (!isConfirmed) return;
+          }
+
+          // Show inline loading spinner
+          Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Processing...', showConfirmButton: false, timer: 1000 });
+
+          App.state.isSilentRefresh = true;
+          const res = await App.api('processAttendanceCorrection', attId, decision, rejectionReason);
+          App.state.isSilentRefresh = false;
+
+          if (res.status === 'Success') {
+            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: res.message, showConfirmButton: false, timer: 3000 });
+            App.loadData.attendance();
+          } else {
+            Swal.fire({ icon: 'error', title: 'Action Failed', text: res.message });
+          }
+        },
         login: async () => {
           try {
             const email = document.getElementById('login-credential').value;
@@ -1492,6 +1703,7 @@
           }
 
           const res = await App.api('changePassword', email, currentPass, newPass);
+          console.log("Response:", res);
           if (res.status === 'Error') {
             Swal.fire({ icon: 'error', title: 'Update Failed', text: res.message });
             return;
@@ -1578,17 +1790,25 @@
           }
         },
 
+        // KEEP THIS UPDATED BLOCK
         markAttendance: async (type) => {
           const res = await App.api('markAttendance', type, App.state.user.EmpID);
-          if (res.status === 'Error') {
+
+          if (res.status === 'CORRECTION_REQUIRED') {
+            // Fill and open the modal smoothly
+            document.getElementById('corr-att-id').value = res.data.AttID;
+            document.getElementById('correction-date-text').innerText = `Missing check-out for: ${res.data.Date}`;
+            App.ui.modals.open('correction-modal');
+          }
+          else if (res.status === 'Error') {
             Swal.fire({ icon: 'warning', title: 'Action Denied', text: res.message });
-          } else {
+          }
+          else {
             Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: res.message, showConfirmButton: false, timer: 3000 });
             App.loadData.attendance();
             App.loadData.dashboard();
           }
         },
-
         saveClient: async () => {
           const data = { ClientID: document.getElementById('cl-id').value, ClientName: document.getElementById('cl-name').value, WorkingHours: document.getElementById('cl-hours').value, Status: document.getElementById('cl-status').value, Technologies: document.getElementById('cl-tech').value, StartDate: document.getElementById('cl-start').value, EndDate: document.getElementById('cl-end').value, Description: document.getElementById('cl-desc').value };
           App.ui.modals.close('client-modal');
@@ -1758,7 +1978,7 @@
             return;
           }
 
-          const res = await App.api('changePassword', App.state.user.Email, currentPass, newPass);
+          const res = await App.api('changePassword', App.state.user.EmpID, currentPass, newPass);
           if (res.status === 'Error') {
             Swal.fire({ icon: 'error', title: 'Update Failed', text: res.message });
             return;
@@ -2009,6 +2229,45 @@
 
             App.state.cache.skills = null;
             await App.loadData['skills-master'](true); // FIX: Await the fresh render
+          }
+        },
+
+        // UPDATE: Inside App.actions object
+
+        markAttendance: async (type) => {
+          const res = await App.api('markAttendance', type, App.state.user.EmpID);
+
+          if (res.status === 'CORRECTION_REQUIRED') {
+            // Open the correction modal
+            document.getElementById('corr-att-id').value = res.data.AttID;
+            document.getElementById('correction-date-text').innerText = `Missing check-out for: ${res.data.Date}`;
+            App.ui.modals.open('correction-modal');
+            Swal.fire({ icon: 'warning', title: 'Check-out Missing', text: res.message });
+          }
+          else if (res.status === 'Error') {
+            Swal.fire({ icon: 'warning', title: 'Action Denied', text: res.message });
+          }
+          else {
+            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: res.message, showConfirmButton: false, timer: 3000 });
+            App.loadData.attendance();
+            App.loadData.dashboard();
+          }
+        },
+
+        submitCorrection: async () => {
+          const attId = document.getElementById('corr-att-id').value;
+          const time = document.getElementById('corr-time').value;
+          const reason = document.getElementById('corr-reason').value;
+
+          App.ui.modals.close('correction-modal');
+
+          const res = await App.api('submitAttendanceCorrection', attId, time, reason, App.state.user.EmpID);
+
+          if (res.status === 'Error') {
+            Swal.fire({ icon: 'error', title: 'Failed', text: res.message });
+          } else {
+            Swal.fire({ icon: 'success', title: 'Submitted', text: 'Correction sent for Admin approval. You may now check in.' });
+            App.loadData.attendance();
           }
         },
 
@@ -2338,6 +2597,26 @@
           document.getElementById('sidebar-overlay').classList.toggle('hidden');
         },
         modals: {
+          // Add this inside the App.ui.modals object
+          showOnLeaveList: () => {
+            const list = App.state.data.onLeaveNames || [];
+            const body = document.getElementById('on-leave-list-body');
+
+            if (list.length === 0) {
+              body.innerHTML = '<p class="text-sm text-gray-500 text-center py-4">No one is on leave today.</p>';
+            } else {
+              // This will now display names instead of EmpIDs
+              body.innerHTML = list.map(name => `
+      <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-xl">
+        <div class="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center text-brand-600 font-bold text-xs">
+          ${name.charAt(0)}
+        </div>
+        <span class="text-sm font-medium dark:text-white">${name}</span>
+      </div>
+    `).join('');
+            }
+            App.ui.modals.open('on-leave-modal');
+          },
           viewCategory: async (categoryName) => {
             document.getElementById('view-category-name').innerText = `Category: ${categoryName}`;
 
@@ -3254,7 +3533,9 @@
           if (data.length === 0) {
             tableHtml += `<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-300">No records found.</td></tr>`;
           } else {
-            if (!App.state.data.employees || App.state.data.employees.length === 0 && !isEmp) App.loadData.employees(true);
+            if (!App.state.data.employees || App.state.data.employees.length === 0 && !isEmp) {
+              await App.loadData.employees(true);
+            }
 
             data.forEach((group, i) => {
               const th = group.TotalHours;
@@ -3266,11 +3547,71 @@
               else if (group.Status === 'Half Day') clr = 'bg-orange-100 text-orange-700 dark:text-orange-300 dark:bg-orange-900/30';
               else if (group.Status === 'Present') clr = 'bg-blue-100 text-blue-700 dark:text-blue-300 dark:bg-blue-900/30';
               else if (group.Status === 'Holiday') clr = 'bg-purple-100 text-purple-700 dark:text-purple-300 dark:bg-purple-900/30';
+              else if (group.Status === 'Pending Approval') clr = 'bg-orange-100 text-orange-700 dark:text-orange-300 dark:bg-orange-900/30';
 
               const emp = App.state.data.employees?.find(e => e.EmpID === group.EmpID);
               const empName = emp ? emp.Name : group.EmpID;
 
-              tableHtml += `<tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 cursor-pointer group transition-colors" onclick="document.getElementById('child-row-${i}').classList.toggle('hidden')"><td class="px-4 py-3"><svg class="w-4 h-4 text-gray-400 dark:text-gray-200 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></td><td class="px-4 py-3 font-medium dark:text-white">${group.Date}</td>${!isEmp ? `<td class="px-4 py-3"><div class="font-semibold text-gray-800 dark:text-white">${empName}</div><div class="text-xs text-gray-500 dark:text-gray-400">${group.EmpID}</div></td>` : ''}<td class="px-4 py-3 text-gray-600 dark:text-gray-200">${group.Sessions.length} Session(s)</td><td class="px-4 py-3 font-semibold dark:text-white">${hrs}h ${mins}m</td><td class="px-4 py-3"><span class="px-2 py-1 text-[10px] uppercase font-bold rounded-full ${clr}">${group.Status}</span></td></tr><tr id="child-row-${i}" class="hidden bg-gray-50/30 dark:bg-slate-800/20 border-b border-gray-100 dark:border-slate-700 ${group.Sessions.length === 0 ? 'hidden' : ''}"><td colspan="${!isEmp ? '6' : '5'}" class="p-0"><div class="px-10 py-4"><table class="w-full text-xs text-left"><thead class="text-gray-400 dark:text-gray-200 border-b border-gray-200 dark:border-slate-700"><tr><th class="pb-2">Session ID</th><th class="pb-2">Check In</th><th class="pb-2">Check Out</th><th class="pb-2">Hours</th><th class="pb-2">Late?</th></tr></thead><tbody>${group.Sessions.map(s => `<tr><td class="py-2 text-gray-500 dark:text-gray-300">${s.AttID}</td><td class="py-2 font-medium text-green-600 dark:text-green-400">${formatTime(s.CheckIn)}</td><td class="py-2 font-medium text-orange-500 dark:text-orange-400">${formatTime(s.CheckOut)}</td><td class="py-2 dark:text-gray-100">${s.Hours || '-'}</td><td class="py-2"><span class="${s.LateArrival === 'Yes' ? 'text-red-500 font-bold' : 'dark:text-gray-300'}">${s.LateArrival || 'No'}</span></td></tr>`).join('')}</tbody></table></div></td></tr>`;
+              // Safely build the inner HTML for the nested child rows
+              let sessionsHtml = group.Sessions.map(s => {
+                let acts = '-';
+                let extraNote = s.CorrectionReason ? '<div class="text-[10px] text-orange-500 mt-1 italic break-words whitespace-normal max-w-[200px]">Note: ' + s.CorrectionReason + '</div>' : '';
+
+                if (!isEmp && s.Status === 'Pending Approval') {
+                  acts = '<div class="flex gap-2">' +
+                    '<button onclick="App.actions.processCorrection(\'' + s.AttID + '\', \'Approved\')" class="bg-green-100 hover:bg-green-200 text-green-700 dark:bg-green-900/40 dark:text-green-400 px-3 py-1 rounded-lg font-bold transition-colors">Approve</button>' +
+                    '<button onclick="App.actions.processCorrection(\'' + s.AttID + '\', \'Rejected\')" class="bg-red-100 hover:bg-red-200 text-red-700 dark:bg-red-900/40 dark:text-red-400 px-3 py-1 rounded-lg font-bold transition-colors">Reject</button>' +
+                    '</div>';
+                } else if (isEmp && s.Status === 'Pending Approval') {
+                  acts = '<span class="text-orange-500 font-bold bg-orange-50 px-2 py-1 rounded border border-orange-200">Awaiting Admin</span>';
+                }
+
+                let sStatus = s.Status || 'Present';
+                let sStatusClass = s.Status === 'Pending Approval' ? 'text-orange-500' : 'text-gray-600 dark:text-gray-300';
+
+                return '<tr class="border-b border-gray-100/50 dark:border-slate-700/30 last:border-0">' +
+                  '<td class="py-3 text-gray-500 dark:text-gray-300">' + s.AttID + '</td>' +
+                  '<td class="py-3 font-medium text-green-600 dark:text-green-400">' + formatTime(s.CheckIn) + '</td>' +
+                  '<td class="py-3 font-medium text-orange-500 dark:text-orange-400">' + formatTime(s.CheckOut) + '</td>' +
+                  '<td class="py-3 dark:text-gray-100 font-bold">' + (s.Hours || '-') + '</td>' +
+                  '<td class="py-3"><span class="font-bold ' + sStatusClass + '">' + sStatus + '</span></td>' +
+                  '<td class="py-3">' + acts + ' ' + extraNote + '</td>' +
+                  '</tr>';
+              }).join('');
+
+              tableHtml += `
+                <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 cursor-pointer group transition-colors" onclick="document.getElementById('child-row-${i}').classList.toggle('hidden')">
+                  <td class="px-4 py-3">
+                    <svg class="w-4 h-4 text-gray-400 dark:text-gray-200 group-hover:text-brand-500 dark:group-hover:text-brand-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </td>
+                  <td class="px-4 py-3 font-medium dark:text-white">${group.Date}</td>
+                  ${!isEmp ? `<td class="px-4 py-3"><div class="font-semibold text-gray-800 dark:text-white">${empName}</div><div class="text-xs text-gray-500 dark:text-gray-400">${group.EmpID}</div></td>` : ''}
+                  <td class="px-4 py-3 text-gray-600 dark:text-gray-200">${group.Sessions.length} Session(s)</td>
+                  <td class="px-4 py-3 font-semibold dark:text-white">${hrs}h ${mins}m</td>
+                  <td class="px-4 py-3"><span class="px-2 py-1 text-[10px] uppercase font-bold rounded-full ${clr}">${group.Status}</span></td>
+                </tr>
+                <tr id="child-row-${i}" class="hidden bg-gray-50/30 dark:bg-slate-800/20 border-b border-gray-100 dark:border-slate-700 ${group.Sessions.length === 0 ? 'hidden' : ''}">
+                  <td colspan="${!isEmp ? '6' : '5'}" class="p-0">
+                    <div class="px-10 py-4">
+                      <table class="w-full text-xs text-left">
+                        <thead class="text-gray-400 dark:text-gray-200 border-b border-gray-200 dark:border-slate-700">
+                          <tr>
+                            <th class="pb-2">Session ID</th>
+                            <th class="pb-2">Check In</th>
+                            <th class="pb-2">Check Out</th>
+                            <th class="pb-2">Hours</th>
+                            <th class="pb-2">Status</th>
+                            <th class="pb-2">Actions / Notes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          ${sessionsHtml}
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              `;
             });
           }
           tableHtml += `</tbody>`;
@@ -3341,7 +3682,15 @@
               if (l.Status === 'Approved' && l.StartDate.startsWith(currentMonth)) approvedMonth++;
               if (l.Status === 'Rejected' && l.StartDate.startsWith(currentMonth)) rejectedMonth++;
             });
+            const leaveEmployees = data
+              .filter(l => l.Status === 'Approved' && l.StartDate <= todayStr && l.EndDate >= todayStr)
+              .map(l => {
+                const emp = App.state.data.employees.find(e => e.EmpID === l.EmpID);
+                return emp ? emp.Name : l.EmpID;
+              });
 
+            // Store globally so the modal can read it
+            App.state.data.onLeaveNames = leaveEmployees;
             const kpiContainer = document.getElementById('admin-leave-kpis');
             kpiContainer.classList.remove('hidden');
             kpiContainer.innerHTML = `
@@ -3361,6 +3710,43 @@
                   <div class="p-3 bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400 rounded-xl"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
                   <div><p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Rejected (This Mth)</p><h4 class="text-xl font-bold text-gray-800 dark:text-white">${rejectedMonth}</h4></div>
                </div>
+<div class="bg-white dark:bg-dark-card p-4 rounded-2xl border border-gray-100 dark:border-dark-border shadow-sm">
+    <div class="flex items-center justify-between">
+        <!-- Left -->
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400 rounded-xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+            </div>
+
+            <div>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                    On Leave Today
+                </p>
+                <h4 class="text-xl font-bold text-gray-800 dark:text-white">
+                    ${onLeaveToday}
+                </h4>
+            </div>
+        </div>
+
+        <!-- Right -->
+        <button
+            onclick="App.ui.modals.showOnLeaveList()"
+            class="p-2 rounded-lg text-gray-400 hover:text-brand-600 hover:bg-gray-100 dark:hover:bg-dark-hover transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                </path>
+            </svg>
+        </button>
+    </div>
+</div>
+</div>
             `;
           }
 
@@ -3635,6 +4021,74 @@
     }
 
     document.addEventListener('DOMContentLoaded', loadHolidays);
+  </script>
+  <script>
+    function pwToggle(id, btn) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      btn.classList.toggle('text-brand-500');
+    }
+
+    function pwStrength() {
+      const val = document.getElementById('profile-new-pass').value;
+      const checks = {
+        len: val.length >= 8,
+        upper: /[A-Z]/.test(val),
+        lower: /[a-z]/.test(val),
+        num: /\d/.test(val),
+        special: /[@$!%*?&]/.test(val)
+      };
+
+      const setReq = (id, ok) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('text-green-600', ok);
+        el.classList.toggle('dark:text-green-400', ok);
+        el.classList.toggle('text-gray-400', !ok);
+        el.classList.toggle('dark:text-gray-500', !ok);
+        el.querySelector('.pw-dot').textContent = ok ? '✓' : '○';
+      };
+      setReq('pw-req-len', checks.len);
+      setReq('pw-req-upper', checks.upper);
+      setReq('pw-req-lower', checks.lower);
+      setReq('pw-req-num', checks.num);
+      setReq('pw-req-special', checks.special);
+
+      const score = Object.values(checks).filter(Boolean).length;
+      const bars = ['pw-bar-1', 'pw-bar-2', 'pw-bar-3', 'pw-bar-4'];
+      // 0-1 reqs = weak(1), 2-3 = fair(2), 4 = good(3), 5 = strong(4)
+      let filled = 0, color = '', label = '—', labelColor = 'text-gray-400';
+      if (val.length === 0) { filled = 0; }
+      else if (score <= 1) { filled = 1; color = 'bg-red-500'; label = 'Weak'; labelColor = 'text-red-500'; }
+      else if (score <= 3) { filled = 2; color = 'bg-orange-500'; label = 'Fair'; labelColor = 'text-orange-500'; }
+      else if (score === 4) { filled = 3; color = 'bg-yellow-500'; label = 'Good'; labelColor = 'text-yellow-600'; }
+      else { filled = 4; color = 'bg-green-500'; label = 'Strong'; labelColor = 'text-green-600'; }
+
+      bars.forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = 'h-1.5 flex-1 rounded-full transition-colors ' + (i < filled ? color : 'bg-gray-200 dark:bg-slate-700');
+      });
+      const lbl = document.getElementById('pw-strength-label');
+      lbl.textContent = label;
+      lbl.className = 'text-xs font-semibold w-16 text-right ' + labelColor;
+
+      pwMatch();
+    }
+
+    function pwMatch() {
+      const np = document.getElementById('profile-new-pass').value;
+      const cp = document.getElementById('profile-confirm-pass').value;
+      const el = document.getElementById('pw-match-text');
+      if (!el) return;
+      if (!cp) { el.textContent = ''; return; }
+      if (np === cp) {
+        el.textContent = '✓ Passwords match';
+        el.className = 'text-xs mt-1.5 h-4 text-green-600 dark:text-green-400 font-medium';
+      } else {
+        el.textContent = '✕ Passwords do not match';
+        el.className = 'text-xs mt-1.5 h-4 text-red-500 font-medium';
+      }
+    }
   </script>
 </body>
 
